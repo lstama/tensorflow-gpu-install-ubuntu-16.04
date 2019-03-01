@@ -7,7 +7,7 @@ After following these instructions you'll have:
 
 1. Ubuntu 16.04. 
 2. Cuda 9.0 drivers installed.
-3  Cudnn 7.3.1
+3. Cudnn 7.3.1
 4. A conda environment with python 3.6.    
 5. Tensorflow 1.11.0.
 6. Keras
