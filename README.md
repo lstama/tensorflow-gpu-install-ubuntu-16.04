@@ -7,8 +7,10 @@ After following these instructions you'll have:
 
 1. Ubuntu 16.04. 
 2. Cuda 9.0 drivers installed.
-3. A conda environment with python 3.6.    
-4. The latest tensorflow version with gpu support.   
+3  Cudnn 7.3.1
+4. A conda environment with python 3.6.    
+5. Tensorflow 1.11.0.
+6. Keras
 
 ---   
 ### Step 0: Noveau drivers     
@@ -116,6 +118,8 @@ sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
 export CUDA_HOME=/usr/local/cuda
 export PATH="$PATH:/usr/local/cuda/bin"
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 ```   
 
 4a. Reload bashrc     
@@ -123,73 +127,23 @@ export PATH="$PATH:/usr/local/cuda/bin"
 source ~/.bashrc
 ```   
 
-5. Install miniconda   
-``` bash
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh   
-
-# press s to skip terms   
-
-# Do you approve the license terms? [yes|no]
-# yes
-
-# Miniconda3 will now be installed into this location:
-# accept the location
-
-# Do you wish the installer to prepend the Miniconda3 install location
-# to PATH in your /home/ghost/.bashrc ? [yes|no]
-# yes    
-
-```   
-
-5a. Reload bashrc     
-``` bash 
-source ~/.bashrc
-```   
-
-6. Create python 3.6 conda env to install tf   
-``` bash
-conda create -n tensorflow python=3.6
-
-# press y a few times 
-```   
-
-7. Activate env   
-``` bash
-source activate tensorflow   
+5. update pip (might already be up to date, but just in case...)
+```
+pip3 install --upgrade pip
 ```
 
-8. update pip (might already be up to date, but just in case...)
-```
-pip install --upgrade pip
-```
-
-9. Install stable tensorflow with GPU support for python 3.6    
+6. Install stable tensorflow with GPU support for python 3.6    
 ``` bash
-pip install --upgrade tensorflow-gpu
+pip3 install tensorflow-gpu==1.11.0
+```
 
-# If the above fails, try the part below
-# pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.2.0-cp36-cp36m-linux_x86_64.whl
-```   
+7. Install stable tensorflow with GPU support for python 3.6    
+``` bash
+pip3 install keras
+```
 
-10. Test tf install   
+8. Test tf and keras install with [keras mnist script](https://github.com/keras-team/keras/blob/master/examples/mnist_cnn.py)  
 ``` bash
 # start python shell   
-python
-
-# run test script   
-import tensorflow as tf   
-
-hello = tf.constant('Hello, TensorFlow!')
-
-# when you run sess, you should see a bunch of lines with the word gpu in them (if install worked)
-# otherwise, not running on gpu
-sess = tf.Session()
-print(sess.run(hello))
-```  
-
-or alternatively
-
-```
-tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))"
+python3 mnist_cnn.py
 ```
